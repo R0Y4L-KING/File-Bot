@@ -13,7 +13,7 @@ OWNER = os.environ.get("OWNER", "SANATANI_B0Y")
 OWNER_ID = int(os.environ.get("OWNER_ID", "6275020364"))
 
 PORT = os.environ.get("PORT", "8001")
-BASE_URL = os.environ.get("BASE_URL", "")
+BASE_URL = os.environ.get("BASE_URL", "https://file-bot-47iw.onrender.com")
 
 DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://FilestoreDB:Darkauli%401234@infinityfile.pitecuw.mongodb.net/?appName=Infinityfile")
 DB_NAME = os.environ.get("DATABASE_NAME", "FilestoreDB")
