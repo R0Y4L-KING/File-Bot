@@ -108,8 +108,18 @@ async def start_command(client: Client, message: Message):
                 base64_string = basic
 
             if not is_premium and user_id != OWNER_ID and not basic.startswith("yu3elk"):
-                await short_url(client, message, base64_string)
-                return
+                # Check if user verified in last 10 hours
+                verify_status = await db.get_verify_status(user_id)
+                is_verified = verify_status.get('is_verified', False)
+                verified_time = verify_status.get('verified_time', 0)
+                current_time = int(time.time())
+                ten_hours = 10 * 60 * 60
+
+                if is_verified and (current_time - verified_time) < ten_hours:
+                    pass  # Already verified - give file directly
+                else:
+                    await short_url(client, message, base64_string)
+                    return
 
         except Exception as e:
             print(f"Error processing start payload: {e}")
@@ -145,6 +155,9 @@ async def start_command(client: Client, message: Message):
             await temp_msg.delete()
 
         codeflix_msgs = []
+
+        # Mark user as verified for 10 hours
+        await db.update_verify_status(user_id, is_verified=True, verified_time=int(time.time()))
 
         for msg in messages:
             original_caption = msg.caption.html if msg.caption else ""
