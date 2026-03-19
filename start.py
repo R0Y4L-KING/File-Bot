@@ -39,15 +39,9 @@ async def short_url(client: Client, message: Message, base64_string):
         prem_link = f"https://t.me/{client.username}?start=yu3elk{base64_string}7"
         short_link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, prem_link)
 
-        try:
-            masked_link = await create_masked_link(short_link)
-        except Exception as e:
-            print(f"Masking failed, using short_link directly: {e}")
-            masked_link = short_link
-
         buttons = [
             [
-                InlineKeyboardButton(text="ᴅᴏᴡɴʟᴏᴀᴅ", url=masked_link),
+                InlineKeyboardButton(text="ᴅᴏᴡɴʟᴏᴀᴅ", url=short_link),
                 InlineKeyboardButton(text="ᴛᴜᴛᴏʀɪᴀʟ", url=TUT_VID)
             ],
             [
